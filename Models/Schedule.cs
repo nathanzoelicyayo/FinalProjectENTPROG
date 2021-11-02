@@ -23,6 +23,10 @@ namespace FinalProjectENTPROG.Models
 
         [Display(Name = "Date & Time")]
         public DateTime Date { get; set; }
+
+        [Display(Name ="Slots")]
+        [Range (1, 3, ErrorMessage = "Maximum number of slots has been reached")]
+        public int Slots { get; set; }
     }
 
     public enum Location {
