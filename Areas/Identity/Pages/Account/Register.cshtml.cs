@@ -47,6 +47,18 @@ namespace FinalProjectENTPROG.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "First Name")]
+            public string FN { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LN { get; set; }
+
+            [Required]
+            [Display(Name = "User Type")]
+            public UserTypes Type { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }

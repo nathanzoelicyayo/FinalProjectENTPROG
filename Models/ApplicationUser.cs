@@ -14,4 +14,10 @@ namespace FinalProjectENTPROG.Models
         public string LastName { get; set; }
 
     }
+
+    public enum UserTypes
+    {
+        Admin = 1,
+        VaccineUser = 2
+    }
 }
