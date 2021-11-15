@@ -13,6 +13,8 @@ namespace FinalProjectENTPROG.Models
 
         public string LastName { get; set; }
 
+        public UserTypes Type { get; set; }
+
     }
 
     public enum UserTypes

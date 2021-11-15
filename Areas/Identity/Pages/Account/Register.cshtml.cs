@@ -87,7 +87,8 @@ namespace FinalProjectENTPROG.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email
+                , FirstName = Input.FN, LastName = Input.LN, Type = Input.Type, EmailConfirmed = true };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
