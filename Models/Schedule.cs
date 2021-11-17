@@ -26,7 +26,7 @@ namespace FinalProjectENTPROG.Models
 
         [Display(Name ="Slots")]
         [Range (1, 3, ErrorMessage = "Maximum number of slots has been reached")]
-        public int Slots { get; set; }
+        public int? Slots { get; set; }
     }
 
     public enum Location {
