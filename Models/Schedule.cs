@@ -22,7 +22,7 @@ namespace FinalProjectENTPROG.Models
         public Location Location { get; set; }
 
         [Display(Name = "Date & Time")]
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         [Display(Name ="Slots")]
         [Range (1, 3, ErrorMessage = "Maximum number of slots has been reached")]
