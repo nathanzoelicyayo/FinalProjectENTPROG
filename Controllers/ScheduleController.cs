@@ -46,5 +46,38 @@ namespace FinalProjectENTPROG.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var schedule = _context.Schedules.Where(i => i.ScheduleID == id).SingleOrDefault();
+            if (schedule == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(schedule);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int? id, Schedule record)
+        {
+            var schedule = _context.Schedules.Where(i => i.ScheduleID == id).SingleOrDefault();
+            schedule.ScheduleID = record.ScheduleID;
+            schedule.Admin = record.Admin;
+            schedule.ScheduledUser = record.ScheduledUser;
+            schedule.Location = record.Location;
+            schedule.Date = record.Date;
+            schedule.Slots = record.Slots;
+
+            _context.Schedules.Update(schedule);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
