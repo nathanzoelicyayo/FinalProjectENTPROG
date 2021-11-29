@@ -17,6 +17,7 @@ namespace FinalProjectENTPROG.Controllers
         {
             _context = context;
         }
+
         public IActionResult Index()
         {
             var list = _context.Schedules.ToList();
