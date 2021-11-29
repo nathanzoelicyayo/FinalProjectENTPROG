@@ -45,6 +45,7 @@ namespace FinalProjectENTPROG.Controllers
                 Admin = record.Admin,
                 ScheduledUser = record.ScheduledUser,
                 Location = record.Location,
+                Municipality = record.Municipality,
                 Date = record.Date,
                 Slots = record.Slots
             };
@@ -86,6 +87,7 @@ namespace FinalProjectENTPROG.Controllers
             schedule.Admin = record.Admin;
             schedule.ScheduledUser = record.ScheduledUser;
             schedule.Location = record.Location;
+            schedule.Municipality = record.Municipality;
             schedule.Date = record.Date;
             schedule.Slots = record.Slots;
 
