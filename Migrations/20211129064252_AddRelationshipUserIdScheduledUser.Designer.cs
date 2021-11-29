@@ -4,14 +4,16 @@ using FinalProjectENTPROG.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalProjectENTPROG.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211129064252_AddRelationshipUserIdScheduledUser")]
+    partial class AddRelationshipUserIdScheduledUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,6 +105,9 @@ namespace FinalProjectENTPROG.Migrations
                     b.Property<int>("Admin")
                         .HasColumnType("int");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
@@ -112,15 +117,15 @@ namespace FinalProjectENTPROG.Migrations
                     b.Property<int>("Location")
                         .HasColumnType("int");
 
-                    b.Property<string>("ScheduledUserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ScheduledUser")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Slots")
                         .HasColumnType("int");
 
                     b.HasKey("ScheduleID");
 
-                    b.HasIndex("ScheduledUserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Schedules");
                 });
@@ -262,11 +267,11 @@ namespace FinalProjectENTPROG.Migrations
 
             modelBuilder.Entity("FinalProjectENTPROG.Models.Schedule", b =>
                 {
-                    b.HasOne("FinalProjectENTPROG.Models.ApplicationUser", "ScheduledUser")
+                    b.HasOne("FinalProjectENTPROG.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ScheduledUserId");
+                        .HasForeignKey("ApplicationUserId");
 
-                    b.Navigation("ScheduledUser");
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 using FinalProjectENTPROG.Data;
 using FinalProjectENTPROG.Models;
@@ -20,6 +21,12 @@ namespace FinalProjectENTPROG.Controllers
 
         public IActionResult Index()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
+            if (user.Type != UserTypes.Admin)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var list = _context.Schedules.ToList();
             return View(list);
         }
@@ -50,6 +57,13 @@ namespace FinalProjectENTPROG.Controllers
 
         public IActionResult Edit(int? id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
+            if (user.Type != UserTypes.Admin)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null)
             {
                 return RedirectToAction("Index");

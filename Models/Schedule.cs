@@ -15,10 +15,6 @@ namespace FinalProjectENTPROG.Models
         public int Admin { get; set; }
 
         [Required(ErrorMessage = "Required.")]
-        [Display(Name = "Scheduled User")]
-        public int ScheduledUser { get; set; }
-
-        [Required(ErrorMessage = "Required.")]
         public Location Location { get; set; }
 
         [Display(Name = "Date & Time")]
@@ -27,6 +23,10 @@ namespace FinalProjectENTPROG.Models
         [Display(Name ="Slots")]
         [Range (1, 3, ErrorMessage = "Maximum number of slots has been reached")]
         public int? Slots { get; set; }
+
+        public virtual ApplicationUser ScheduledUser { get; set; }
+
+        public string Id { get; set; }
     }
 
     public enum Location {
