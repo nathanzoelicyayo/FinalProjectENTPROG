@@ -8,11 +8,15 @@ using System.Security.Claims;
 using FinalProjectENTPROG.Data;
 using FinalProjectENTPROG.Models;
 
+using System.Net;
+using System.Net.Mail;
+
 namespace FinalProjectENTPROG.Controllers
 {
     public class ScheduleController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public MailAddress from { get; set; }
 
         public ScheduleController(ApplicationDbContext context)
         {
@@ -95,6 +99,39 @@ namespace FinalProjectENTPROG.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Contact(Contact record)
+        {
+            MailMessage mail = new MailMessage();
+            {
+                from = new MailAddress("benildesample@gmail.com", "Administrator");
+            };
+            mail.To.Add(new MailAddress(record.Email));
+
+            mail.Subject = "Inquiry from" + record.ScheduledUser + " (" + record.Subject + ")";
+            string message = "Good day " + record.ScheduledUser + "<br/><br/>" +
+                "Here is your Vaccination Schedule details: <br/><br/>" +
+                "Location: " + record.Municipality + ", " + record.Location + "<br/>" +
+                "Date and Time: " + record.Date + " - " + record.Time + "<br/><br/>" +
+                "See you!";
+            mail.Body = message;
+            mail.IsBodyHtml = true;
+
+            using SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential("benildesample@gmail.com", "entprog2021"),
+                EnableSsl = true
+            };
+            smtp.Send(mail);
+            ViewBag.Message = "Schedule sent.";
+            return View();
         }
     }
 }

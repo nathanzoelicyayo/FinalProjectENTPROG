@@ -7,6 +7,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
+using System.Net;
+using System.Net.Mail;
+
 namespace FinalProjectENTPROG.Controllers
 {
     public class HomeController : Controller
