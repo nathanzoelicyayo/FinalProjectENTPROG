@@ -103,16 +103,21 @@ namespace FinalProjectENTPROG.Controllers
 
         public IActionResult Contact()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
+            if (user.Type != UserTypes.Admin)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         [HttpPost]
         public IActionResult Contact(Contact record)
         {
-            MailMessage mail = new MailMessage();
-            {
-                from = new MailAddress("benildesample@gmail.com", "Administrator");
-            };
+
+            var mail = new MailMessage();
+            mail.From = new MailAddress("benildesample@gmail.com", "Vaccination Queueing Staff");
             mail.To.Add(new MailAddress(record.Email));
 
             mail.Subject = "Inquiry from" + record.ScheduledUser + " (" + record.Subject + ")";
@@ -123,12 +128,14 @@ namespace FinalProjectENTPROG.Controllers
                 "See you!";
             mail.Body = message;
             mail.IsBodyHtml = true;
+            mail.Priority = MailPriority.High;
 
             using SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
             {
                 Credentials = new NetworkCredential("benildesample@gmail.com", "entprog2021"),
                 EnableSsl = true
             };
+
             smtp.Send(mail);
             ViewBag.Message = "Schedule sent.";
             return View();
