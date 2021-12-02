@@ -15,7 +15,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="records" class="table">
     <thead>
         <tr>
             <th>
@@ -68,3 +68,13 @@
         }
     </tbody>
 </table>
+
+@section Scripts{
+        <script src="~/lib/datatables/js/jquery.dataTables.js"></script>
+        <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#records').Datatable();
+            });
+        </script>
+    }
