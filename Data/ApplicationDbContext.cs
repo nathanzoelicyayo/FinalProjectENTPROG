@@ -16,7 +16,7 @@ namespace FinalProjectENTPROG.Data
         }
 
         public DbSet<Schedule> Schedules { get; set; }
-
+        public DbSet<ApplicationUser> AppUser { get; set; }
         public DbSet<FinalProjectENTPROG.Models.Contact> Contact { get; set; }
     }
 }

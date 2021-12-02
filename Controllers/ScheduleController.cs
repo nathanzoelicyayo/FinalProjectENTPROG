@@ -10,17 +10,21 @@ using FinalProjectENTPROG.Models;
 
 using System.Net;
 using System.Net.Mail;
+using Microsoft.AspNetCore.Identity;
+using System.Dynamic;
 
 namespace FinalProjectENTPROG.Controllers
 {
     public class ScheduleController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         public MailAddress from { get; set; }
 
-        public ScheduleController(ApplicationDbContext context)
+        public ScheduleController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -32,7 +36,8 @@ namespace FinalProjectENTPROG.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var list = _context.Schedules.ToList();
-            return View(list);
+            //ViewBag.userid = _userManager.GetUserId();
+            return View(list);        
         }
 
         public IActionResult Create()
@@ -43,11 +48,12 @@ namespace FinalProjectENTPROG.Controllers
         [HttpPost]
         public IActionResult Create(Schedule record)
         {
+            string userid = _userManager.GetUserId(HttpContext.User);
             var schedule = new Schedule()
             {
                 ScheduleID = record.ScheduleID,
                 Admin = record.Admin,
-                ScheduledUser = record.ScheduledUser,
+                Id = userid,
                 Location = record.Location,
                 Municipality = record.Municipality,
                 Date = record.Date,
@@ -88,8 +94,8 @@ namespace FinalProjectENTPROG.Controllers
         {
             var schedule = _context.Schedules.Where(i => i.ScheduleID == id).SingleOrDefault();
             schedule.ScheduleID = record.ScheduleID;
-            schedule.Admin = record.Admin;
-            schedule.ScheduledUser = record.ScheduledUser;
+            schedule.Admin = record.Admin = _userManager.GetUserId(HttpContext.User);
+            schedule.Id = schedule.Id;
             schedule.Location = record.Location;
             schedule.Municipality = record.Municipality;
             schedule.Date = record.Date;

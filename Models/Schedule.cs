@@ -12,7 +12,7 @@ namespace FinalProjectENTPROG.Models
         [Key]
         public int? ScheduleID { get; set; }
 
-        public int? Admin { get; set; }
+        public string Admin { get; set; }
 
         [Required(ErrorMessage = "Required.")]
         public Location Location { get; set; }

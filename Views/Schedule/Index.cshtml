@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => item.Admin)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ScheduledUser)
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Location)
@@ -62,9 +62,7 @@
                     @Html.DisplayFor(modelItem => item.Slots)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ScheduleID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ScheduleID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ScheduleID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.ScheduleID">Edit/Details</a>
                 </td>
             </tr>
         }
