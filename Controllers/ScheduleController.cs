@@ -119,7 +119,7 @@ namespace FinalProjectENTPROG.Controllers
         }
 
         [HttpPost]
-        public IActionResult Contact(int? id, Contact record)
+        public IActionResult Contact(Contact record)
         {
 
             var mail = new MailMessage();
