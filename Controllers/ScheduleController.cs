@@ -119,7 +119,7 @@ namespace FinalProjectENTPROG.Controllers
         }
 
         [HttpPost]
-        public IActionResult Contact(Contact record)
+        public IActionResult Contact(int? id, Contact record)
         {
 
             var mail = new MailMessage();
@@ -145,6 +145,19 @@ namespace FinalProjectENTPROG.Controllers
             smtp.Send(mail);
             ViewBag.Message = "Schedule sent.";
             return View();
+        }
+
+        public IActionResult ListUsers()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
+            if (user.Type != UserTypes.Admin)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var users = _userManager.Users;
+            return View(users);
         }
     }
 }
