@@ -31,10 +31,18 @@ namespace FinalProjectENTPROG.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
-            if (user.Type != UserTypes.Admin)
+            if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                if (user.Type != UserTypes.Admin)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            
             var list = _context.Schedules.ToList();
             //ViewBag.userid = _userManager.GetUserId();
             return View(list);        
@@ -42,6 +50,19 @@ namespace FinalProjectENTPROG.Controllers
 
         public IActionResult Create()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
+            if (User.Identity.IsAuthenticated)
+            {
+                if (user.Type != UserTypes.Admin)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
             return View();
         }
 
@@ -151,9 +172,16 @@ namespace FinalProjectENTPROG.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
-            if (user.Type != UserTypes.Admin)
+            if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                if (user.Type != UserTypes.Admin)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
             }
 
             var users = _userManager.Users;
